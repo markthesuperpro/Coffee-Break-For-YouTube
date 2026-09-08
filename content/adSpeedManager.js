@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-    const CHECK_INTERVAL = 10; // Milliseconds
+    const CHECK_INTERVAL = 1; // Milliseconds
     let userPlaybackRate = 1; // Default playback speed
     let isAdPlaying = false;
     let adCount = 0; // Track the current ad sequence number
@@ -13,7 +13,6 @@
         video.muted = true;
         video.playbackRate = 16;
         video.style.visibility = 'hidden';
-        console.log('[AD BLOCK] Mute + clamp triggered on new video.');
     }
 
     function restoreVideo(video) {
@@ -64,7 +63,6 @@
                 isAdPlaying = true;
                 adCount++;
                 userPlaybackRate = video.playbackRate;
-                console.log("[AD BLOCK] Ad started — saved rate:", userPlaybackRate);
             }
 
             // Mute and speed up if there's an ad detected
@@ -75,7 +73,6 @@
         } else if (isAdPlaying) {
             isAdPlaying = false;
             adCount = 0;
-            console.log("[AD BLOCK] Ad ended — restoring.");
 
             restoreVideo(video);
             removeBlackOverlay();
@@ -92,7 +89,6 @@
             if (video && video !== lastVideo) {
                 lastVideo = video;
                 video.muted = true;
-                console.log('[AD BLOCK] Muted new video element via observer.');
             }
         });
 
